@@ -6,9 +6,9 @@ var Container = PIXI.Container,
 	loader = PIXI.loader,
 	resources = PIXI.loader.resources,
 	Sprite = PIXI.Sprite;
-
+	
 //set up renderer and stage
-var renderer = autoDetectRenderer(256,256);
+var renderer = autoDetectRenderer(512,512);
 var stage = new Container();
 document.body.appendChild(renderer.view);
 
@@ -17,16 +17,34 @@ scaleToWindow(renderer.view, "0xFFFFFF");
 
 //load an object
 loader
-.add("pixie96x48.png")
+.add("treasureHunter.json")
 .load(setup);
 //this function will run after it is loaded
-
+var dungeon, explorer, treasure, door;
 function setup(){
-	var pixie = new Sprite(
-		loader.resources["pixie96x48.png"].texture
+	//dungeon Texture
+	var dungeonTexture = PIXI.utils.TextureCache["dungeon.png"];
+	dungeon = new Sprite(dungeonTexture);
+	stage.addChild(dungeon);
+	// explorer
+	explorer = new Sprite(
+		resources["treasureHunter.json"].textures["explorer.png"]
 		);
-// Add sprite to the stage
-stage.addChild(pixie);
+	explorer.x = 68;
+	explorer.y = stage.height / 2 - explorer.height / 2;
+	stage.addChild(explorer);
+	//treasure chest
+	var id = PIXI.loader.resources["treasureHunter.json"].textures;
+	treasure = new Sprite(id["treasure.png"]);
+	//positioning treasure
+	treasure.x = stage.width - treasure.width -48;
+	treasure.y = stage.height / 2 - treasure.height / 2;
+	stage.addChild(treasure);
+	//exit door
+	door = new Sprite(id["door.png"]);
+	door.position.set(32,0);
+	stage.addChild(door);
+
 //render the stage
 renderer.render(stage);
 }
