@@ -44,6 +44,22 @@ function setup(){
 	door = new Sprite(id["door.png"]);
 	door.position.set(32,0);
 	stage.addChild(door);
+	//sets some variable to use
+	var numberOfBlobs = 6,
+		spacing = 48,
+		xOffset =150;
+	//for loop which will loop until as many times as numberOfBlobs
+	for (i=0;i < numberOfBlobs; i++){
+		//loads the blob
+		var blob = new Sprite(id["blob.png"]);
+		//positions it with even x spacing and random y spacing
+		var x = spacing * i + xOffset;
+		var y = randomInt (0, stage.height - blob.height);
+		blob.x = x;
+		blob.y = y;
+		// adds it to the stage
+		stage.addChild(blob);
+	}
 
 //render the stage
 renderer.render(stage);
